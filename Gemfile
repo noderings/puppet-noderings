@@ -6,7 +6,7 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 group :test do
   gem 'voxpupuli-test', '~> 15.0',  :require => false
   gem 'puppet_metadata', '~> 6.4',  :require => false
-  gem 'json', '< 3',                :require => false
+  gem 'json', '< 4',                :require => false
 end
 
 group :development do
