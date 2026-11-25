@@ -19,6 +19,8 @@ Manage [NodeRings](https://noderings.com) from OpenVox or Puppet: virtual
 machines ordered from the NodeRings marketplace, DNS zones and records (with
 DNSSEC), firewall rulesets and SSH keys.
 
+New to it? The step-by-step guide [How to use Puppet and OpenVox on NodeRings to order a VPS](https://noderings.com/blog/puppet-vps) walks through a first run.
+
 ```puppet
 noderings_ssh_key { 'deploy':
   public_key => 'ssh-ed25519 AAAAC3Nza... deploy@example',
