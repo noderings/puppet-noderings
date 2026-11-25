@@ -1,0 +1,12 @@
+<%- |
+  Sensitive[String[1]] $api_token,
+  String[1] $api_url,
+  Optional[String[1]] $organization_id,
+| -%>
+# Managed by Puppet (noderings class). Read by the noderings_* types.
+---
+token: "<%= $api_token.unwrap %>"
+api_url: "<%= $api_url %>"
+<% if $organization_id { -%>
+organization_id: "<%= $organization_id %>"
+<% } -%>

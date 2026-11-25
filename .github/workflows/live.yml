@@ -1,0 +1,50 @@
+---
+# Acceptance tests against the real NodeRings API. They run only when the
+# NODERINGS_TOKEN secret is set. The billed virtual machine examples run only
+# when the workflow is started by hand with billed set to true.
+name: Live API
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      billed:
+        description: Also order, change and delete a billed virtual machine
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    name: OpenVox ${{ matrix.collection }} on Ubuntu 24.04
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        collection: [openvox8]
+    env:
+      NODERINGS_TOKEN: ${{ secrets.NODERINGS_TOKEN }}
+      NODERINGS_TEST_BILLED: ${{ inputs.billed && '1' || '0' }}
+      NODERINGS_TEST_ID: gh-${{ github.run_id }}-${{ github.run_attempt }}
+      BEAKER_SETFILE: ubuntu2404-64
+      BEAKER_PUPPET_COLLECTION: ${{ matrix.collection }}
+    steps:
+      - uses: actions/checkout@v4
+        if: env.NODERINGS_TOKEN != ''
+      - uses: ruby/setup-ruby@v1
+        if: env.NODERINGS_TOKEN != ''
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+        env:
+          BUNDLE_WITH: system_tests
+      - name: Acceptance tests
+        if: env.NODERINGS_TOKEN != ''
+        run: bundle exec rake beaker

@@ -1,0 +1,69 @@
+{
+  "name": "noderings-noderings",
+  "version": "0.1.0",
+  "author": "NodeRings",
+  "summary": "Manage NodeRings virtual machines, DNS zones and records, firewall rulesets and SSH keys.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/noderings/puppet-noderings",
+  "project_page": "https://github.com/noderings/puppet-noderings",
+  "issues_url": "https://github.com/noderings/puppet-noderings/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 9.0.0 < 11.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "22.04",
+        "24.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "openvox",
+      "version_requirement": ">= 8.19.0 < 10.0.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">= 8.0.0 < 9.0.0"
+    }
+  ],
+  "tags": [
+    "noderings",
+    "cloud",
+    "vps",
+    "virtual-machine",
+    "dns",
+    "dnssec",
+    "firewall",
+    "marketplace"
+  ]
+}

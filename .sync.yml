@@ -1,0 +1,15 @@
+---
+spec/spec_helper.rb:
+  facterdb_string_keys: true
+  spec_overrides: "require 'spec_helper_local'"
+.puppet-lint.rc:
+  enabled_lint_checks:
+    - parameter_documentation
+    - parameter_types
+Gemfile:
+  optional:
+    ':test':
+      # json 3 removed JSON.create_id=, which facterdb's jgrep still calls.
+      # Drop this pin once facterdb or jgrep is fixed.
+      - gem: json
+        version: '< 3'
