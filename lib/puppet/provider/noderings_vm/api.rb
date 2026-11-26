@@ -82,7 +82,7 @@ Puppet::Type.type(:noderings_vm).provide(:api, parent: Puppet::Provider::Noderin
     plan_id, region_id, = api('finding an offer') do
       compute.choose_offer(client, resource[:plan], resource[:country], resource[:city],
                            billing_type: resource[:billing_type].to_s, provider_id: resource[:provider_id],
-                           sort: resource[:sort].to_s)
+                           sort: resource[:sort].to_s, provider: resource[:hosting_provider])
     end
     [plan_id, region_id]
   end

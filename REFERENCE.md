@@ -456,6 +456,7 @@ The following parameters are available in the `noderings_vm` type.
 * [`billing_type`](#-noderings_vm--billing_type)
 * [`city`](#-noderings_vm--city)
 * [`country`](#-noderings_vm--country)
+* [`hosting_provider`](#-noderings_vm--hosting_provider)
 * [`name`](#-noderings_vm--name)
 * [`password`](#-noderings_vm--password)
 * [`plan`](#-noderings_vm--plan)
@@ -491,6 +492,14 @@ City of the offer, such as Ashburn.
 
 Country of the offer, such as United States.
 
+##### <a name="-noderings_vm--hosting_provider"></a>`hosting_provider`
+
+Only consider offers from this marketplace provider, given by its ID, its
+storefront slug (such as acme-hosting) or its name (Acme Hosting, any case).
+Left unset, the cheapest matching offer from any provider is ordered. A name
+that more than one provider uses fails; give the ID or slug then. (Puppet
+reserves the name provider for the resource provider.)
+
 ##### <a name="-noderings_vm--name"></a>`name`
 
 namevar
@@ -516,7 +525,7 @@ usually discover the appropriate provider for your platform.
 
 ##### <a name="-noderings_vm--provider_id"></a>`provider_id`
 
-Only consider offers from this marketplace provider.
+Only consider offers from the marketplace provider with this ID. Takes precedence over hosting_provider.
 
 ##### <a name="-noderings_vm--region_id"></a>`region_id`
 
