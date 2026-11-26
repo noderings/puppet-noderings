@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [0.2.0](https://github.com/noderings/puppet-noderings/compare/v0.1.0...v0.2.0) (2026-11-26)
+
+
+### Features
+
+* choose the provider when ordering a VM ([#4](https://github.com/noderings/puppet-noderings/issues/4)) ([8ea58a9](https://github.com/noderings/puppet-noderings/commit/8ea58a94d5c5b8f011c8d05ac7862c5b247b43a1))
+
 ## [v0.1.0](https://github.com/noderings/puppet-noderings/tree/v0.1.0) (2026-11-25)
 
 **Implemented enhancements:**
