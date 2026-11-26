@@ -6,6 +6,9 @@ name: Live API
 
 # yamllint disable-line rule:truthy
 on:
+  schedule:
+    # Nightly live API tests (billed input stays false on the schedule).
+    - cron: "17 4 * * *"
   push:
     branches:
       - main
@@ -38,6 +41,9 @@ jobs:
       BEAKER_SETFILE: ubuntu2404-64
       BEAKER_PUPPET_COLLECTION: ${{ matrix.collection }}
     steps:
+      - name: Skip when NODERINGS_TOKEN is not set
+        if: env.NODERINGS_TOKEN == ''
+        run: echo "::notice title=Live tests skipped::Add the repository secret NODERINGS_TOKEN (a service account token for a test organization) to run them."
       - uses: actions/checkout@v7
         if: env.NODERINGS_TOKEN != ''
       - uses: ruby/setup-ruby@v1
