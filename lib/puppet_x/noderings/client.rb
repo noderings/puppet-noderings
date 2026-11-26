@@ -444,6 +444,10 @@ module PuppetX
         get("/v1/marketplace/providers/#{PuppetX::Noderings.escape(provider_id)}")['provider']
       end
 
+      def get_public_storefront(slug)
+        get("/v1/public/storefronts/#{PuppetX::Noderings.escape(slug)}")['storefront']
+      end
+
       def list_distros
         get('/v1/distros')['distros'] || []
       end

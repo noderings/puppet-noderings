@@ -116,6 +116,13 @@ noderings_vm { 'web-1':
 }
 ```
 
+Without `hosting_provider` the provider can change between orders. Set it to
+keep one provider: it takes the provider's ID, its storefront slug (such as
+`acme-hosting`) or its name (`Acme Hosting`, any case). A name that more than
+one provider uses fails; give the ID or slug then. The parameter is not called
+`provider` because Puppet reserves that name. `provider_id` still works and
+takes precedence.
+
 On an existing VM, Puppet keeps `tags`, `firewall_ruleset` (an empty string
 detaches it) and `power_state` as declared. The plan is never changed. A
 different `distro` fails the run unless `allow_reinstall => true`, because

@@ -208,6 +208,34 @@ describe 'noderings providers' do
       expect(fake.writes).to be_empty
     end
 
+    context 'with hosting_provider' do
+      [FakeNodeRings::ACME_ID, 'acme-hosting', 'Acme Hosting', '  acme HOSTING '].each do |provider|
+        it "orders from the provider given as #{provider.inspect}" do
+          report = apply(resource(:noderings_vm, 'web-1', offer.merge(ssh_keys: ['laptop'], hosting_provider: provider)))
+          expect(failed(report)).to be_empty
+          expect(fake.created_vm_bodies.last).to include('planId' => FakeNodeRings::ACME_PLAN_ID, 'regionId' => FakeNodeRings::ACME_REGION_ID)
+        end
+      end
+
+      it 'orders the cheapest offer without one' do
+        apply(resource(:noderings_vm, 'web-1', offer.merge(ssh_keys: ['laptop'])))
+        expect(fake.created_vm_bodies.last['planId']).to eq FakeNodeRings::PLAN_ID
+      end
+
+      it 'fails for an unknown provider' do
+        report = apply(resource(:noderings_vm, 'web-1', offer.merge(ssh_keys: ['laptop'], hosting_provider: 'Nobody Hosting')))
+        expect(failed(report).join).to include('from provider Nobody Hosting')
+        expect(fake.created_vm_bodies).to be_empty
+      end
+
+      it 'refuses a provider name two providers share' do
+        fake.extra_providers << FakeNodeRings::ACME_OFFER.merge('organizationId' => '66666666-6666-6666-6666-666666666666')
+        report = apply(resource(:noderings_vm, 'web-1', offer.merge(ssh_keys: ['laptop'], hosting_provider: 'acme hosting')))
+        expect(failed(report).join).to include('more than one provider is named acme hosting')
+        expect(fake.created_vm_bodies).to be_empty
+      end
+    end
+
     it 'converges tags, firewall and power on an existing VM' do
       apply(resource(:noderings_vm, 'web-1', offer.merge(ssh_keys: ['laptop'], tags: ['old'])))
       apply_fresh { [resource(:noderings_vm, 'web-1', tags: ['new'], firewall_ruleset: 'web', power_state: 'stopped')] }

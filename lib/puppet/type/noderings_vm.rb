@@ -63,8 +63,18 @@ Puppet::Type.newtype(:noderings_vm) do
     defaultto(:price)
   end
 
+  newparam(:hosting_provider) do
+    desc <<~DESC
+      Only consider offers from this marketplace provider, given by its ID, its
+      storefront slug (such as acme-hosting) or its name (Acme Hosting, any case).
+      Left unset, the cheapest matching offer from any provider is ordered. A name
+      that more than one provider uses fails; give the ID or slug then. (Puppet
+      reserves the name provider for the resource provider.)
+    DESC
+  end
+
   newparam(:provider_id) do
-    desc 'Only consider offers from this marketplace provider.'
+    desc 'Only consider offers from the marketplace provider with this ID. Takes precedence over hosting_provider.'
   end
 
   newparam(:plan_id) do
