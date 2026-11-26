@@ -23,7 +23,8 @@ permissions:
 jobs:
   live:
     name: OpenVox ${{ matrix.collection }} on Ubuntu 24.04
-    runs-on: ubuntu-24.04
+    # Pushes to main run on the org runner; pull requests and everything else stay GitHub-hosted.
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON('["self-hosted","linux","x64"]') || 'ubuntu-24.04' }}
     strategy:
       fail-fast: false
       max-parallel: 1
