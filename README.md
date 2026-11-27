@@ -306,6 +306,10 @@ BEAKER_SETFILE=ubuntu2404-64 BEAKER_PUPPET_COLLECTION=openvox8 bundle exec rake 
 They name every object after `NODERINGS_TEST_ID` and remove what they create.
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Related
+
+The [Go SDK](https://github.com/noderings/noderings-go) is the official Go client for the NodeRings API.
+
 ## License
 
 Copyright NodeRings. Licensed under the [Apache License, Version 2.0](LICENSE).
