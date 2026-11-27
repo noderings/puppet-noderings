@@ -1,0 +1,41 @@
+{
+  "description": "Bolt inventory plugin: lists NodeRings virtual machines as Bolt targets. Use it from inventory.yaml with _plugin: noderings.",
+  "input_method": "stdin",
+  "private": true,
+  "files": [
+    "noderings/lib/puppet_x/noderings/client.rb",
+    "noderings/lib/puppet_x/noderings/compute.rb",
+    "noderings/lib/puppet_x/noderings/bolt_inventory.rb"
+  ],
+  "parameters": {
+    "token": {
+      "description": "NodeRings API token. Defaults to the NODERINGS_TOKEN environment variable on the Bolt controller.",
+      "type": "Optional[String[1]]",
+      "sensitive": true
+    },
+    "api_url": {
+      "description": "NodeRings API URL.",
+      "type": "Optional[String[1]]"
+    },
+    "organization_id": {
+      "description": "Organization to list VMs from. Defaults to the token's organization.",
+      "type": "Optional[String[1]]"
+    },
+    "tags": {
+      "description": "Only VMs that have every one of these tags.",
+      "type": "Optional[Array[String[1]]]"
+    },
+    "power_states": {
+      "description": "Only VMs in these power states, such as running or stopped. Use [all] for every VM. Defaults to [running].",
+      "type": "Optional[Array[String[1]]]"
+    },
+    "name_pattern": {
+      "description": "Only VMs whose hostname matches this regular expression.",
+      "type": "Optional[String[1]]"
+    },
+    "target_mapping": {
+      "description": "Where each target field comes from: name, uri, alias, features take a VM field name; config, facts and vars take a hash of field names. Defaults to name: hostname, uri: ipv4.",
+      "type": "Optional[Hash]"
+    }
+  }
+}

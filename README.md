@@ -17,7 +17,9 @@
 
 Manage [NodeRings](https://noderings.com) from OpenVox or Puppet: virtual
 machines ordered from the NodeRings marketplace, DNS zones and records (with
-DNSSEC), firewall rulesets and SSH keys.
+DNSSEC), firewall rulesets and SSH keys. The module is also a
+[Bolt inventory plugin](#bolt-inventory-plugin) that turns your NodeRings VMs into
+Bolt targets.
 
 New to it? The step-by-step guide [How to use Puppet and OpenVox on NodeRings to order a VPS](https://noderings.com/blog/puppet-vps) walks through a first run.
 
@@ -202,9 +204,78 @@ ones in place and move them into order.
 `noderings_firewall_ruleset` resources it names, and `noderings_dns_record`
 requires its `noderings_dns_zone`. Every type requires the `noderings.yaml` file.
 
+## Bolt inventory plugin
+
+The module is also a [Bolt](https://www.puppet.com/docs/bolt) inventory plugin.
+It lists your NodeRings VMs as Bolt targets, so `bolt command run`, tasks and
+plans reach every VM without a hand-written target list. New VMs show up the next
+time Bolt reads the inventory.
+
+Add the module to your Bolt project:
+
+```shell
+bolt module add noderings-noderings
+```
+
+Then reference the plugin in `inventory.yaml`:
+
+```yaml
+groups:
+  - name: noderings
+    targets:
+      - _plugin: noderings
+        token:
+          _plugin: env_var
+          var: NODERINGS_TOKEN
+    config:
+      transport: ssh
+      ssh:
+        user: root
+
+  # Only running VMs tagged web, with extra data as target vars.
+  - name: web
+    targets:
+      - _plugin: noderings
+        tags: [web]
+        target_mapping:
+          vars:
+            plan: plan_code
+            city: region_city
+```
+
+```shell
+export NODERINGS_TOKEN=nr_...
+bolt inventory show --targets noderings --detail
+bolt command run 'uptime' --targets web
+```
+
+| Option | Default | Description |
+|---|---|---|
+| `token` | `NODERINGS_TOKEN` on the Bolt controller | API token. Read it with the `env_var` or a secret plugin rather than writing it into the inventory. |
+| `api_url` | `https://api.noderings.com` | API URL |
+| `organization_id` | the token's organization | Organization to list VMs from |
+| `tags` | | Only VMs that have every one of these tags |
+| `power_states` | `[running]` | Only VMs in these states, such as `running` or `stopped`; `[all]` for every VM |
+| `name_pattern` | | Only VMs whose hostname matches this regular expression |
+| `target_mapping` | `name: hostname`, `uri: ipv4` | Where each target field comes from (see below) |
+
+`target_mapping` takes the target fields `name`, `uri`, `alias` and `features` as
+a VM field name, and `config`, `facts` and `vars` as a hash of VM field names, for
+example `config: { ssh: { host: ipv6 } }`. A field can index into a list, such as
+`tags.0`. The VM fields are `id`, `hostname`, `ipv4`, `ipv6`, `power_state`,
+`distro`, `plan_code`, `plan_id`, `region_id`, `region_city`, `region_country`,
+`provider_name`, `billing_type`, `firewall_ruleset_id`, `tags`, `cpus`,
+`memory_mb`, `disk_mb` and `instant_app`. Every target also gets all of them
+as the fact `noderings`, so plans can read `$target.facts['noderings']['region_city']`.
+VMs that do not have an address yet are left out.
+
+The plugin runs on the Bolt controller and only reads the VM list. It never
+changes anything in NodeRings.
+
 ## Reference
 
-See [REFERENCE.md](REFERENCE.md) for every type, parameter and property.
+See [REFERENCE.md](REFERENCE.md) for every type, parameter and property, and the
+plugin's `resolve_reference` task.
 
 ## Limitations
 

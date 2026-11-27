@@ -16,6 +16,10 @@
 * [`noderings_ssh_key`](#noderings_ssh_key): Manages an SSH public key stored in a NodeRings organization. `noderings_vm` installs stored keys on new virtual machines.
 * [`noderings_vm`](#noderings_vm): Manages a NodeRings virtual machine. When no VM has the hostname, Puppet orders the cheapest marketplace offer that matches `plan`, `country`
 
+### Tasks
+
+* [`resolve_reference`](#resolve_reference): Bolt inventory plugin: lists NodeRings virtual machines as Bolt targets. Use it from inventory.yaml with _plugin: noderings.
+
 ## Classes
 
 ### <a name="noderings"></a>`noderings`
@@ -550,3 +554,55 @@ Default value: `[]`
 Seconds to wait for each operation to finish.
 
 Default value: `900`
+
+## Tasks
+
+### <a name="resolve_reference"></a>`resolve_reference`
+
+Bolt inventory plugin: lists NodeRings virtual machines as Bolt targets. Use it from inventory.yaml with _plugin: noderings.
+
+**Supports noop?** false
+
+#### Parameters
+
+##### `token`
+
+Data type: `Optional[String[1]]`
+
+NodeRings API token. Defaults to the NODERINGS_TOKEN environment variable on the Bolt controller.
+
+##### `api_url`
+
+Data type: `Optional[String[1]]`
+
+NodeRings API URL.
+
+##### `organization_id`
+
+Data type: `Optional[String[1]]`
+
+Organization to list VMs from. Defaults to the token's organization.
+
+##### `tags`
+
+Data type: `Optional[Array[String[1]]]`
+
+Only VMs that have every one of these tags.
+
+##### `power_states`
+
+Data type: `Optional[Array[String[1]]]`
+
+Only VMs in these power states, such as running or stopped. Use [all] for every VM. Defaults to [running].
+
+##### `name_pattern`
+
+Data type: `Optional[String[1]]`
+
+Only VMs whose hostname matches this regular expression.
+
+##### `target_mapping`
+
+Data type: `Optional[Hash]`
+
+Where each target field comes from: name, uri, alias, features take a VM field name; config, facts and vars take a hash of field names. Defaults to name: hostname, uri: ipv4.
