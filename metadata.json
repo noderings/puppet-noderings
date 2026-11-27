@@ -1,6 +1,6 @@
 {
   "name": "noderings-noderings",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "NodeRings",
   "summary": "Manage NodeRings virtual machines, DNS zones and records, firewall rulesets and SSH keys, and list VMs as Bolt targets.",
   "license": "Apache-2.0",
