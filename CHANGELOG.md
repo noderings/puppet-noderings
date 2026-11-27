@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [0.3.0](https://github.com/noderings/puppet-noderings/compare/v0.2.0...v0.3.0) (2026-11-27)
+
+
+### Features
+
+* Bolt inventory plugin ([#7](https://github.com/noderings/puppet-noderings/issues/7)) ([9b285c1](https://github.com/noderings/puppet-noderings/commit/9b285c1125d2f26e7bca00718f369b0b0399e7f4))
+
 ## [0.2.0](https://github.com/noderings/puppet-noderings/compare/v0.1.0...v0.2.0) (2026-11-26)
 
 
