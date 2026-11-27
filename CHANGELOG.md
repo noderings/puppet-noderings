@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [0.3.1](https://github.com/noderings/puppet-noderings/compare/v0.3.0...v0.3.1) (2026-11-27)
+
+
+### Documentation
+
+* link the official Go SDK in the README ([#9](https://github.com/noderings/puppet-noderings/issues/9)) ([39feb25](https://github.com/noderings/puppet-noderings/commit/39feb2557b3fa440a8926d31ed7054d2820d3273))
+
 ## [0.3.0](https://github.com/noderings/puppet-noderings/compare/v0.2.0...v0.3.0) (2026-11-27)
 
 
